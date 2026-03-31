@@ -1,0 +1,68 @@
+import type { Metadata } from "next";
+import { Instrument_Sans, Work_Sans, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+export const metadata: Metadata = {
+  title: {
+    default: "Cloudless — Cloud Computing, Serverless & AI Marketing",
+    template: "%s | Cloudless",
+  },
+  description:
+    "Clear skies. Zero friction. We help startups and SMBs with cloud architecture, serverless development, data analytics, and AI-powered digital marketing.",
+  keywords: [
+    "cloud computing",
+    "serverless",
+    "data analytics",
+    "AI marketing",
+    "digital marketing",
+    "cloud migration",
+    "Greece",
+  ],
+  authors: [{ name: "Cloudless" }],
+  openGraph: {
+    title: "Cloudless — Cloud Computing, Serverless & AI Marketing",
+    description:
+      "Clear skies. Zero friction. Cloud architecture, serverless development, data analytics, and AI-powered marketing for startups and SMBs.",
+    url: "https://cloudless.gr",
+    siteName: "Cloudless",
+    locale: "en_US",
+    type: "website",
+  },
+};
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${instrumentSans.variable} ${workSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
