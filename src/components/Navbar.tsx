@@ -6,6 +6,7 @@ import { useState } from "react";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -59,8 +60,12 @@ export default function Navbar() {
         </button>
       </nav>
       {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-white border-t border-slate-200 px-6 py-4 space-y-3">
+      <div
+        className={`md:hidden bg-white border-t border-slate-200 px-6 overflow-hidden transition-all duration-300 ease-in-out ${
+          mobileOpen ? "max-h-64 py-4 opacity-100" : "max-h-0 py-0 opacity-0"
+        }`}
+      >
+        <div className="space-y-3">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -79,7 +84,7 @@ export default function Navbar() {
             Get a Free Audit
           </Link>
         </div>
-      )}
+      </div>
     </header>
   );
 }

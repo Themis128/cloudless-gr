@@ -22,6 +22,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cloudless.gr"),
   title: {
     default: "Cloudless — Cloud Computing, Serverless & AI Marketing",
     template: "%s | Cloudless",
@@ -46,6 +47,12 @@ export const metadata: Metadata = {
     siteName: "Cloudless",
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cloudless — Cloud Computing, Serverless & AI Marketing",
+    description:
+      "Clear skies. Zero friction. Cloud architecture, serverless, analytics & AI marketing for startups and SMBs.",
   },
 };
 export default function RootLayout({
