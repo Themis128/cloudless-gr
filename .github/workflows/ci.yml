@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  lint-typecheck-build:
-    name: Lint, Type Check & Build
+  lint-typecheck-test-build:
+    name: Lint, Type Check, Test & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -19,19 +19,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+
+      - name: Install pnpm
+        run: npm install -g pnpm@latest
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Lint
-        run: npx eslint .
+        run: pnpm eslint .
 
       - name: Type check
-        run: npx tsc --noEmit
+        run: pnpm tsc --noEmit
+
+      - name: Test
+        run: pnpm test
 
       - name: Build
-        run: npx next build
+        run: pnpm next build
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY || 'sk_test_placeholder' }}
 
