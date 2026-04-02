@@ -1,0 +1,41 @@
+# Path-based PR labeling rules for actions/labeler
+# Docs: https://github.com/actions/labeler
+
+frontend:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/components/**"
+          - "src/app/**/*.tsx"
+
+styles:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/globals.css"
+          - "tailwind.config.*"
+
+blog:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/blog/**"
+          - "src/lib/blog.ts"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+config:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "next.config.*"
+          - "tsconfig.json"
+          - "package.json"
+          - ".env*"
+
+seo:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/app/**/opengraph-image.*"
+          - "src/app/**/twitter-image.*"
+          - "src/app/sitemap.*"
+          - "src/app/robots.*"
+          - "src/app/layout.tsx"
