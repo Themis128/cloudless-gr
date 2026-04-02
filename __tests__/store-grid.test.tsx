@@ -15,10 +15,10 @@ function renderWithCart(ui: React.ReactElement) {
 }
 
 describe("StoreGrid", () => {
-  it("renders all 8 products by default", () => {
+  it("renders all 9 products by default", () => {
     renderWithCart(<StoreGrid />);
     const addButtons = screen.getAllByText("Add to Cart");
-    expect(addButtons.length).toBe(8);
+    expect(addButtons.length).toBe(9);
   });
 
   it("renders filter buttons for all categories", () => {
@@ -42,7 +42,7 @@ describe("StoreGrid", () => {
     const servicesBtn = filterButtons.find((b) => b.textContent === "Services")!;
     fireEvent.click(servicesBtn);
     const addButtons = screen.getAllByText("Add to Cart");
-    expect(addButtons.length).toBe(3);
+    expect(addButtons.length).toBe(4);
     expect(screen.getByText("Cloud Architecture Audit")).toBeDefined();
   });
 
@@ -76,10 +76,10 @@ describe("StoreGrid", () => {
     );
     const servicesBtn = filterButtons.find((b) => b.textContent === "Services")!;
     fireEvent.click(servicesBtn);
-    expect(screen.getAllByText("Add to Cart").length).toBe(3);
+    expect(screen.getAllByText("Add to Cart").length).toBe(4);
     const allBtn = filterButtons.find((b) => b.textContent === "All Products")!;
     fireEvent.click(allBtn);
-    expect(screen.getAllByText("Add to Cart").length).toBe(8);
+    expect(screen.getAllByText("Add to Cart").length).toBe(9);
   });
 
   it("product cards link to detail pages", () => {

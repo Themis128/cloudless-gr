@@ -24,7 +24,7 @@ export const demoProducts: StoreProduct[] = [
     name: "Cloud Architecture Audit",
     description:
       "Comprehensive review of your cloud infrastructure with actionable optimization recommendations. Covers AWS, GCP, and Azure.",
-    price: 120000,
+    price: 200000,
     currency: "eur",    category: "service",
     image: "/store/cloud-audit.svg",
     features: [
@@ -40,7 +40,7 @@ export const demoProducts: StoreProduct[] = [
     name: "Serverless Starter Package",
     description:
       "Get your first serverless application built and deployed. Includes CI/CD pipeline, monitoring, and documentation.",
-    price: 180000,
+    price: 240000,
     currency: "eur",
     category: "service",
     image: "/store/serverless-starter.svg",
@@ -50,6 +50,23 @@ export const demoProducts: StoreProduct[] = [
       "CI/CD pipeline setup",
       "Monitoring & alerting",
       "Full documentation",
+    ],
+  },
+  {
+    id: "srv-analytics",
+    name: "Data Analytics & Dashboards",
+    description:
+      "Custom analytics dashboards and data pipelines to turn your raw data into actionable insights. Includes ETL setup, BI reporting, and real-time monitoring.",
+    price: 240000,
+    currency: "eur",
+    category: "service",
+    image: "/store/analytics-dashboards.svg",
+    features: [
+      "Custom analytics dashboards",
+      "ETL pipeline development",
+      "Real-time data processing",
+      "Business intelligence reporting",
+      "Data warehouse design",
     ],
   },
   {

@@ -11,7 +11,7 @@ const services = [
   {
     icon: "☁️",
     title: "Cloud Architecture & Migration",
-    price: "From €1,200",
+    price: "From €2,000",
     unit: "per project",
     features: [
       "AWS / GCP / Azure architecture design",
@@ -24,7 +24,7 @@ const services = [
   {
     icon: "⚡",
     title: "Serverless Development",
-    price: "From €1,800",
+    price: "From €2,400",
     unit: "per project",    features: [
       "Event-driven application design",
       "AWS Lambda / API Gateway / DynamoDB",
@@ -36,7 +36,7 @@ const services = [
   {
     icon: "📊",
     title: "Data Analytics & Dashboards",
-    price: "From €2,000",
+    price: "From €2,400",
     unit: "per project",
     features: [
       "Custom analytics dashboards",
@@ -153,7 +153,7 @@ export default function ServicesPage() {
               </ul>
             </div>
             <div className="text-center md:text-right flex-shrink-0">
-              <div className="text-4xl font-heading font-bold">€3,900</div>
+              <div className="text-4xl font-heading font-bold">€3,600</div>
               <div className="text-sm text-slate-400 mt-1">per month</div>
               <div className="text-xs text-cyan font-mono mt-2">SAVE 30%</div>
               <Link

@@ -10,8 +10,8 @@ import type { ProductCategory } from "@/lib/store-products";
 
 describe("store-products", () => {
   describe("demoProducts", () => {
-    it("contains 8 products", () => {
-      expect(demoProducts).toHaveLength(8);
+    it("contains 9 products", () => {
+      expect(demoProducts).toHaveLength(9);
     });
 
     it("has unique IDs for every product", () => {
@@ -62,7 +62,7 @@ describe("store-products", () => {
   describe("getProductsByCategory", () => {
     it("returns only services when filtering by service", () => {
       const services = getProductsByCategory("service");
-      expect(services.length).toBe(3);
+      expect(services.length).toBe(4);
       expect(services.every((p) => p.category === "service")).toBe(true);
     });
 
