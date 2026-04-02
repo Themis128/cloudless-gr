@@ -3,6 +3,8 @@ import { Instrument_Sans, Work_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { CartProvider } from "@/context/CartContext";
+import CartSlideOver from "@/components/store/CartSlideOver";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -66,9 +68,12 @@ export default function RootLayout({
       className={`${instrumentSans.variable} ${workSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartSlideOver />
+        </CartProvider>
       </body>
     </html>
   );

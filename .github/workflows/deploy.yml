@@ -10,9 +10,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build
+  deploy:
+    name: Build & Deploy
     runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,66 +28,38 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies        run: npm ci
 
-      - name: Build (static export)
+      - name: Build
         run: npx next build
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: static-site
-          path: out/
-          retention-days: 7
-
-  deploy:
-    name: Deploy to S3 + CloudFront
-    needs: build
-    runs-on: ubuntu-latest
-    environment: production
-    permissions:
-      id-token: write
-      contents: read
-
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: static-site
-          path: out/
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_EMAILJS_SERVICE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+          NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: ${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+          NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION || 'eu-central-1' }}
-      - name: Sync to S3
-        run: |
-          aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} \
-            --delete \
-            --cache-control "public, max-age=31536000, immutable" \
-            --exclude "*.html" \
-            --exclude "sitemap*.xml" \
-            --exclude "robots.txt"
 
-          # HTML files get shorter cache + must-revalidate
-          aws s3 sync out/ s3://${{ secrets.S3_BUCKET }} \
-            --delete \
-            --cache-control "public, max-age=0, must-revalidate" \
-            --exclude "*" \
-            --include "*.html" \
-            --include "sitemap*.xml" \
-            --include "robots.txt"
-
-      - name: Invalidate CloudFront cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
+      # Amplify Hosting handles both:
+      #   - Static assets via S3 + CloudFront (your frontend)
+      #   - API routes via Lambda (your Stripe backend)
+      # Amplify auto-detects Next.js and configures both layers.
+      - name: Deploy to Amplify Hosting
+        uses: aws-actions/aws-amplify-deploy@v1
+        with:
+          app-id: ${{ secrets.AMPLIFY_APP_ID }}
+          branch-name: main
+          wait-for-completion: true
 
       - name: Deployment summary
-        run: |
-          echo "## Deployment Complete" >> $GITHUB_STEP_SUMMARY
+        run: |          echo "## Deployment Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Bucket:** \`${{ secrets.S3_BUCKET }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **Region:** \`${{ vars.AWS_REGION || 'eu-central-1' }}\`" >> $GITHUB_STEP_SUMMARY          echo "- **Site:** [https://cloudless.gr](https://cloudless.gr)" >> $GITHUB_STEP_SUMMARY
+          echo "**Architecture:**" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend (static pages) → S3 + CloudFront" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend (API routes) → Amplify / Lambda" >> $GITHUB_STEP_SUMMARY
+          echo "- **Site:** [https://cloudless.gr](https://cloudless.gr)" >> $GITHUB_STEP_SUMMARY

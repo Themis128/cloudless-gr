@@ -30,11 +30,11 @@ jobs:
       - name: Type check
         run: npx tsc --noEmit
 
-      - name: Build (static export)
+      - name: Build
         run: npx next build
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY || 'sk_test_placeholder' }}
 
-      - name: Verify static output exists
+      - name: Verify build output
         run: |
-          test -d out && echo "Static export generated successfully" || (echo "No out directory found" && exit 1)
-          echo "Pages generated:"
-          find out -name "*.html" | sort
+          test -d .next && echo "Build completed successfully" || (echo "No .next directory found" && exit 1)

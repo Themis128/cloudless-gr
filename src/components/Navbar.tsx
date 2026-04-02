@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import CartButton from "@/components/store/CartButton";
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/store", label: "Store" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
@@ -34,6 +36,7 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+          <CartButton />
           <Link
             href="/contact"
             className="bg-electric hover:bg-electric-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
