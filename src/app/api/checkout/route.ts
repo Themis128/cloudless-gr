@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 
 interface CheckoutItem {
   id: string;
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const hasSubscription = items.some((item) => item.recurring);
     const mode = hasSubscription ? "subscription" : "payment";
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: mode as "payment" | "subscription",
       line_items: lineItems as never[],
       success_url: `${origin}/store/success?session_id={CHECKOUT_SESSION_ID}`,
