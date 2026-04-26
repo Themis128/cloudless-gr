@@ -23,10 +23,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (static export)
+      - name: Build
         run: npx next build
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY || 'sk_test_placeholder' }}
 
-      - name: Serve static site        run: npx serve out -l 3000 &
+      - name: Start Next.js server
+        run: npx next start -p 3000 &
         env:
           NODE_ENV: production
 
