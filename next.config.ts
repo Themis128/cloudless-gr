@@ -1,9 +1,10 @@
+import path from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Removed "output: export" to enable API routes and SSR for e-store
   turbopack: {
-    root: ".",
+    root: path.resolve(__dirname),
   },
   images: {
     remotePatterns: [

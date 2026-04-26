@@ -26,12 +26,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      - name: Install dependencies        run: npm ci
+      - name: Install pnpm
+        run: npm install -g pnpm@latest
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Build
-        run: npx next build
+        run: pnpm next build
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
@@ -57,7 +60,8 @@ jobs:
           wait-for-completion: true
 
       - name: Deployment summary
-        run: |          echo "## Deployment Complete" >> $GITHUB_STEP_SUMMARY
+        run: |
+          echo "## Deployment Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Architecture:**" >> $GITHUB_STEP_SUMMARY
           echo "- Frontend (static pages) → S3 + CloudFront" >> $GITHUB_STEP_SUMMARY

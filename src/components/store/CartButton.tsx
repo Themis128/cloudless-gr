@@ -18,6 +18,7 @@ export default function CartButton() {
         stroke="currentColor"
         strokeWidth="1.8"
         viewBox="0 0 24 24"
+        aria-hidden="true"
       >
         <path
           d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"

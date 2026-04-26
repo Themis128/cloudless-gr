@@ -74,9 +74,10 @@ export default function CartSlideOver() {
             </h2>
             <button
               onClick={closeCart}
-              className="p-2 text-slate-400 hover:text-navy transition-colors"
+              className="p-2 text-slate-500 hover:text-navy transition-colors"
+              aria-label="Close cart"
             >
-              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M4 4l12 12M16 4L4 16" strokeLinecap="round" />
               </svg>
             </button>
@@ -123,18 +124,20 @@ export default function CartSlideOver() {
                               onClick={() =>
                                 updateQuantity(item.product.id, item.quantity - 1)
                               }
-                              className="w-7 h-7 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-sm transition-colors"
+                              className="w-7 h-7 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-sm text-slate-700 transition-colors"
+                              aria-label={`Decrease quantity of ${item.product.name}`}
                             >
                               -
                             </button>
-                            <span className="w-8 text-center text-sm font-medium">
+                            <span className="w-8 text-center text-sm font-medium" aria-live="polite">
                               {item.quantity}
                             </span>
                             <button
                               onClick={() =>
                                 updateQuantity(item.product.id, item.quantity + 1)
                               }
-                              className="w-7 h-7 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-sm transition-colors"
+                              className="w-7 h-7 rounded bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-sm text-slate-700 transition-colors"
+                              aria-label={`Increase quantity of ${item.product.name}`}
                             >
                               +
                             </button>
