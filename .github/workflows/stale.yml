@@ -25,7 +25,8 @@ jobs:
           stale-pr-message: >
             This PR has been automatically marked as stale because it has not had
             activity in the last 14 days. It will be closed in 7 days if no further
-            activity occurs.          close-issue-message: "Closed due to inactivity. Feel free to reopen if still relevant."
+            activity occurs.
+          close-issue-message: "Closed due to inactivity. Feel free to reopen if still relevant."
           close-pr-message: "Closed due to inactivity. Feel free to reopen if still relevant."
           days-before-issue-stale: 30
           days-before-pr-stale: 14
