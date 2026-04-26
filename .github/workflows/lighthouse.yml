@@ -9,6 +9,9 @@ jobs:
   lighthouse:
     name: Performance Audit
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
 
     steps:
       - name: Checkout

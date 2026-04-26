@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-navy text-slate-400">
+    <footer className="bg-navy text-slate-300">
       <div className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
@@ -57,7 +57,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
           <p>&copy; {new Date().getFullYear()} Cloudless. All rights reserved.</p>
-          <p className="font-mono text-slate-500">Built with Next.js &amp; deployed on AWS</p>
+          <p className="font-mono text-slate-400">Built with Next.js &amp; deployed on AWS</p>
         </div>
       </div>
     </footer>
