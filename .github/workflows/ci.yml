@@ -9,7 +9,7 @@ on:
 jobs:
   lint-typecheck-test-build:
     name: Lint, Type Check, Test & Build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
