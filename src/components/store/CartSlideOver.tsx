@@ -26,23 +26,21 @@ export default function CartSlideOver() {
   const handleCheckout = async () => {
     setIsCheckingOut(true);
     try {
-      const res = await fetch("/api/checkout", {        method: "POST",
+      const res = await fetch("/api/checkout", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: items.map((item) => ({
             id: item.product.id,
-            name: item.product.name,
-            price: item.product.price,
-            currency: item.product.currency,
             quantity: item.quantity,
-            recurring: item.product.recurring,
-            interval: item.product.interval,
           })),
         }),
       });
       const data = await res.json();
       if (data.url) {
         window.location.href = data.url;
+      } else {
+        alert(data.error || "Checkout failed. Please try again.");
       }
     } catch {
       alert("Checkout failed. Please try again.");
