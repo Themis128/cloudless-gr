@@ -17,13 +17,15 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    # Skip if required secrets are not configured
+    if: ${{ vars.DEPLOY_ENABLED == 'true' }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 
@@ -39,17 +41,12 @@ jobs:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
 
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ vars.AWS_REGION || 'eu-central-1' }}
 
-      # Amplify Hosting handles both:
-      #   - Static assets via S3 + CloudFront (your frontend)
-      #   - API routes via Lambda (your Stripe backend)
-      # Amplify auto-detects Next.js and configures both layers.
       - name: Deploy to Amplify Hosting
         run: |
           JOB_ID=$(aws amplify start-job \
@@ -59,8 +56,6 @@ jobs:
             --query 'jobSummary.jobId' \
             --output text)
           echo "Started Amplify job: $JOB_ID"
-          echo "job-id=$JOB_ID" >> $GITHUB_OUTPUT
-          # Wait for completion (poll every 30s, timeout 20min)
           for i in $(seq 1 40); do
             STATUS=$(aws amplify get-job \
               --app-id ${{ secrets.AMPLIFY_APP_ID }} \
@@ -79,7 +74,4 @@ jobs:
         run: |
           echo "## Deployment Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Architecture:**" >> $GITHUB_STEP_SUMMARY
-          echo "- Frontend (static pages) → S3 + CloudFront" >> $GITHUB_STEP_SUMMARY
-          echo "- Backend (API routes) → Amplify / Lambda" >> $GITHUB_STEP_SUMMARY
-          echo "- **Site:** [https://cloudless.gr](https://cloudless.gr)" >> $GITHUB_STEP_SUMMARY
+          echo "**Site:** [https://cloudless.gr](https://cloudless.gr)" >> $GITHUB_STEP_SUMMARY
