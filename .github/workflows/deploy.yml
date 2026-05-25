@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install pnpm
         run: npm install -g pnpm@latest
@@ -51,11 +51,29 @@ jobs:
       #   - API routes via Lambda (your Stripe backend)
       # Amplify auto-detects Next.js and configures both layers.
       - name: Deploy to Amplify Hosting
-        uses: aws-actions/aws-amplify-deploy@v1
-        with:
-          app-id: ${{ secrets.AMPLIFY_APP_ID }}
-          branch-name: main
-          wait-for-completion: true
+        run: |
+          JOB_ID=$(aws amplify start-job \
+            --app-id ${{ secrets.AMPLIFY_APP_ID }} \
+            --branch-name main \
+            --job-type RELEASE \
+            --query 'jobSummary.jobId' \
+            --output text)
+          echo "Started Amplify job: $JOB_ID"
+          echo "job-id=$JOB_ID" >> $GITHUB_OUTPUT
+          # Wait for completion (poll every 30s, timeout 20min)
+          for i in $(seq 1 40); do
+            STATUS=$(aws amplify get-job \
+              --app-id ${{ secrets.AMPLIFY_APP_ID }} \
+              --branch-name main \
+              --job-id $JOB_ID \
+              --query 'job.summary.status' \
+              --output text)
+            echo "[$i/40] Amplify job status: $STATUS"
+            if [ "$STATUS" = "SUCCEED" ]; then echo "Deploy succeeded"; exit 0; fi
+            if [ "$STATUS" = "FAILED" ] || [ "$STATUS" = "CANCELLED" ]; then echo "Deploy $STATUS"; exit 1; fi
+            sleep 30
+          done
+          echo "Timed out waiting for deploy"; exit 1
 
       - name: Deployment summary
         run: |
