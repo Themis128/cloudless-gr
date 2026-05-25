@@ -20,23 +20,19 @@ export default function ContactPage() {
     setStatus("sending");
 
     const form = e.currentTarget;
-    const data = {
-      service_id: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "",
-      template_id: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "",
-      user_id: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "",
-      template_params: {
-        from_name: (form.elements.namedItem("name") as HTMLInputElement).value,
-        from_email: (form.elements.namedItem("email") as HTMLInputElement).value,        company: (form.elements.namedItem("company") as HTMLInputElement).value,
-        service: (form.elements.namedItem("service") as HTMLSelectElement).value,
-        message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
-      },
+    const payload = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      company: (form.elements.namedItem("company") as HTMLInputElement).value || undefined,
+      service: (form.elements.namedItem("service") as HTMLSelectElement).value || undefined,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
 
     try {
-      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setStatus("sent");
