@@ -177,9 +177,9 @@ export default function ContactPage() {
             {/* Sidebar */}
             <div className="lg:col-span-2 space-y-8">
               <div className="rounded-2xl bg-slate-50 p-8">
-                <h3 className="font-heading font-bold text-navy text-lg">
+                <h2 className="font-heading font-bold text-navy text-lg">
                   What happens next?
-                </h3>
+                </h2>
                 <ol className="mt-4 space-y-4 text-sm text-slate-600">
                   <li className="flex gap-3">
                     <span className="flex-shrink-0 w-6 h-6 rounded-full bg-electric text-white text-xs font-bold flex items-center justify-center">
@@ -202,9 +202,9 @@ export default function ContactPage() {
               </div>
 
               <div className="rounded-2xl border border-slate-200 p-8">
-                <h3 className="font-heading font-bold text-navy text-lg">
+                <h2 className="font-heading font-bold text-navy text-lg">
                   Direct Contact
-                </h3>
+                </h2>
                 <div className="mt-4 space-y-3 text-sm text-slate-600">
                   <p>
                     <span className="font-medium text-navy">Email:</span>{" "}

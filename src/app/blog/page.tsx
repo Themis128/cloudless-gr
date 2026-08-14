@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 const categoryColors: Record<string, string> = {
-  Cloud: "bg-electric/10 text-electric",
-  Serverless: "bg-cyan/10 text-cyan-dark",
+  Cloud: "bg-electric/10 text-electric-dark",
+  Serverless: "bg-cyan/10 text-cyan-800",
   Analytics: "bg-purple-100 text-purple-700",
   "AI Marketing": "bg-emerald-100 text-emerald-700",
 };
@@ -65,7 +65,7 @@ export default function BlogPage() {
                     {post.excerpt}
                   </p>
                   <div className="mt-4 flex items-center justify-between">
-                    <time className="text-xs text-slate-400 font-mono">
+                    <time className="text-xs text-slate-500 font-mono">
                       {formatDate(post.date)}
                     </time>
                     <span className="text-electric text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">

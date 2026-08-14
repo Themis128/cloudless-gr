@@ -8,7 +8,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="text-white text-lg font-heading font-bold">
-              cloudless<span className="text-electric">.gr</span>
+              cloudless<span className="text-electric-light">.gr</span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed">
               Clear skies. Zero friction.<br />
@@ -18,7 +18,7 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="text-white text-sm font-semibold mb-4">Navigate</h4>
+            <h2 className="text-white text-sm font-semibold mb-4">Navigate</h2>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/" className="hover:text-electric transition-colors">Home</Link>
@@ -40,7 +40,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white text-sm font-semibold mb-4">Get in Touch</h4>
+            <h2 className="text-white text-sm font-semibold mb-4">Get in Touch</h2>
             <ul className="space-y-2 text-sm">
               <li>
                 <a
